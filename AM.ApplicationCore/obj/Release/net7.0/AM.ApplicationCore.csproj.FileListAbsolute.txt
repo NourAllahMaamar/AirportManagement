@@ -1,0 +1,12 @@
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/bin/Release/net7.0/AM.ApplicationCore.deps.json
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/bin/Release/net7.0/AM.ApplicationCore.dll
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/bin/Release/net7.0/AM.ApplicationCore.pdb
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Release/net7.0/AM.ApplicationCore.csproj.AssemblyReference.cache
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Release/net7.0/AM.ApplicationCore.GeneratedMSBuildEditorConfig.editorconfig
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Release/net7.0/AM.ApplicationCore.AssemblyInfoInputs.cache
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Release/net7.0/AM.ApplicationCore.AssemblyInfo.cs
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Release/net7.0/AM.ApplicationCore.csproj.CoreCompileInputs.cache
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Release/net7.0/AM.ApplicationCore.dll
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Release/net7.0/refint/AM.ApplicationCore.dll
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Release/net7.0/AM.ApplicationCore.pdb
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Release/net7.0/ref/AM.ApplicationCore.dll

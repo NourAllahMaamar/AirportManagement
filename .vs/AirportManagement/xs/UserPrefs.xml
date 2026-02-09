@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{B2C3D4E5-F6A7-8901-BCDE-F12345678901}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AM.ApplicationCore/Domain/Flight.cs">
+    <Files>
+      <File FileName="AM.ApplicationCore/Domain/Passenger.cs" Line="1" Column="1" />
+      <File FileName="AM.ApplicationCore/Domain/Plane.cs" Line="1" Column="1" />
+      <File FileName="AM.UI.Console/Program.cs" Line="1" Column="1" />
+      <File FileName="AM.ApplicationCore/Services/PassengerExtension.cs" Line="1" Column="1" />
+      <File FileName="AM.ApplicationCore/Domain/Flight.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AirportManagement" expanded="True">
+            <Node name="AM.ApplicationCore" expanded="True" selected="True">
+              <Node name="Domain" expanded="True" />
+              <Node name="Services" expanded="True" />
+            </Node>
+            <Node name="AM.UI.Console" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.AM.UI.Console PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MultiItemStartupConfigurations />
+</Properties>
