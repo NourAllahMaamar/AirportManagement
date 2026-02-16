@@ -43,10 +43,21 @@ class Program
                 context.Database.Migrate();
                 System.Console.WriteLine("✓ Database 'DotNetTd' is ready with EF Core.\n");
 
-                // Seed data if database is empty
-                if (!context.Planes.Any())
+                // Seed data if database is empty or if TPT migration needs reseeding
+                if (!context.Planes.Any() || (context.Passengers.Any() && !context.Staffs.Any() && !context.Travellers.Any()))
                 {
-                    System.Console.WriteLine("Seeding initial data...");
+                    System.Console.WriteLine("Seeding/Reseeding data...");
+                    
+                    // Clear existing data if reseeding due to TPT migration
+                    if (context.Passengers.Any())
+                    {
+                        System.Console.WriteLine("Clearing existing data for TPT migration...");
+                        context.Flights.RemoveRange(context.Flights);
+                        context.Passengers.RemoveRange(context.Passengers);
+                        context.Planes.RemoveRange(context.Planes);
+                        context.SaveChanges();
+                    }
+                    
                     SeedData(context);
                     System.Console.WriteLine("✓ Data seeded successfully.\n");
                 }
@@ -230,6 +241,9 @@ class Program
 
         // Verify Database
         DatabaseVerification.VerifyDatabase();
+        
+        // Show Table Structure
+        TableStructureVerification.ShowTableStructure();
     }
 
     static void CreateDatabaseIfNotExists(string connectionString)
@@ -256,7 +270,7 @@ class Program
         context.Planes.AddRange(TestData.BoingPlane, TestData.AirbusPlane);
         context.SaveChanges();
 
-        // Add passengers (Staff and Travellers)
+        // Add passengers 
         context.Passengers.AddRange(
             TestData.Captain,
             TestData.Hostess1,

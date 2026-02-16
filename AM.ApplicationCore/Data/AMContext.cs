@@ -19,12 +19,9 @@ public class AMContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Configure TPH (Table Per Hierarchy) for Passenger inheritance
-        modelBuilder.Entity<Passenger>()
-            .HasDiscriminator<string>("PassengerType")
-            .HasValue<Passenger>("Passenger")
-            .HasValue<Staff>("Staff")
-            .HasValue<Traveller>("Traveller");
+        // Configure TPT (Table Per Type)
+        modelBuilder.Entity<Staff>().ToTable("Staffs");
+        modelBuilder.Entity<Traveller>().ToTable("Travellers");
 
         // Configure Flight-Plane relationship
         modelBuilder.Entity<Flight>()
