@@ -10,7 +10,6 @@ public class AMContextFactory : IDesignTimeDbContextFactory<AMContext>
     {
         var optionsBuilder = new DbContextOptionsBuilder<AMContext>();
         
-        // Use a default connection string for migrations
         // This will use the connection string from appsettings.json in the Console project
         var connectionString = "Server=127.0.0.1;Port=3306;Database=DotNetTd;Uid=root;Pwd=;";
         
