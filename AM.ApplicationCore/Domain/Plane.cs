@@ -2,6 +2,7 @@ namespace AM.ApplicationCore.Domain;
 
 public class Plane
 {
+    public int Id { get; set; }
     public PlaneType PlaneType { get; set; }
     public int Capacity { get; set; }
     public DateTime ManufactureDate { get; set; }

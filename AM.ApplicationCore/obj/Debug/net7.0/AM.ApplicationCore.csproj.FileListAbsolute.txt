@@ -10,3 +10,5 @@
 /Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Debug/net7.0/refint/AM.ApplicationCore.dll
 /Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Debug/net7.0/AM.ApplicationCore.pdb
 /Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Debug/net7.0/ref/AM.ApplicationCore.dll
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/bin/Debug/net7.0/AM.ApplicationCore.runtimeconfig.json
+/Users/nourallah/Desktop/AirportManagement/AM.ApplicationCore/obj/Debug/net7.0/AM.ApplicationCore.genruntimeconfig.cache

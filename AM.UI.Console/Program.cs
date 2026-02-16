@@ -1,5 +1,10 @@
 using AM.ApplicationCore.Domain;
 using AM.ApplicationCore.Services;
+using AM.ApplicationCore.Data;
+using System.IO;
+using System.Text.Json;
+using MySqlConnector;
+using Microsoft.EntityFrameworkCore;
 
 namespace AM.UI.Console;
 
@@ -7,8 +12,56 @@ class Program
 {
     static void Main(string[] args)
     {
+        // Load DB connection string from appsettings.json
+        string connectionString = null;
+        try
+        {
+            var configText = File.ReadAllText("appsettings.json");
+            using var configJson = JsonDocument.Parse(configText);
+            if (configJson.RootElement.TryGetProperty("ConnectionStrings", out var csSection) &&
+                csSection.TryGetProperty("DefaultConnection", out var csValue))
+            {
+                connectionString = csValue.GetString();
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Console.WriteLine($"Warning: could not read appsettings.json: {ex.Message}");
+        }
+        System.Console.WriteLine($"DB Connection: {connectionString}");
+
+        // Configure DbContext with options
+        var optionsBuilder = new DbContextOptionsBuilder<AMContext>();
+        optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
+        // Create database and apply migrations
+        using (var context = new AMContext(optionsBuilder.Options))
+        {
+            try
+            {
+                System.Console.WriteLine("Applying database migrations...");
+                context.Database.Migrate();
+                System.Console.WriteLine("✓ Database 'DotNetTd' is ready with EF Core.\n");
+
+                // Seed data if database is empty
+                if (!context.Planes.Any())
+                {
+                    System.Console.WriteLine("Seeding initial data...");
+                    SeedData(context);
+                    System.Console.WriteLine("✓ Data seeded successfully.\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"⚠ Database migration failed: {ex.Message}\n");
+            }
+        }
+
         FlightMethods flightService = new FlightMethods();
         flightService.Flights = TestData.listFlights;
+
+
+
 
         // TEST 1: Polymorphism - PassengerType()
         System.Console.WriteLine("\nTEST 1: Polymorphism - PassengerType()");
@@ -174,6 +227,85 @@ class Program
         System.Console.WriteLine($"Passenger: {TestData.Traveller1}");
         System.Console.WriteLine($"Staff: {TestData.Captain}");
         System.Console.WriteLine($"Flight: {TestData.Flight1}");
+
+        // Verify Database
+        DatabaseVerification.VerifyDatabase();
+    }
+
+    static void CreateDatabaseIfNotExists(string connectionString)
+    {
+        var builder = new MySqlConnectionStringBuilder(connectionString);
+        string dbName = builder.Database;
+        builder.Database = null; 
+
+        using (var connection = new MySqlConnection(builder.ConnectionString))
+        {
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{dbName}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;";
+                command.ExecuteNonQuery();
+                System.Console.WriteLine($"Database '{dbName}' checked/created successfully.");
+            }
+        }
+    }
+
+    static void SeedData(AMContext context)
+    {
+        // Add planes
+        context.Planes.AddRange(TestData.BoingPlane, TestData.AirbusPlane);
+        context.SaveChanges();
+
+        // Add passengers (Staff and Travellers)
+        context.Passengers.AddRange(
+            TestData.Captain,
+            TestData.Hostess1,
+            TestData.Hostess2,
+            TestData.Traveller1,
+            TestData.Traveller2,
+            TestData.Traveller3,
+            TestData.Traveller4,
+            TestData.Traveller5
+        );
+        context.SaveChanges();
+
+        // Add flights with their relationships
+        foreach (var flight in TestData.listFlights)
+        {
+            // Attach the plane to avoid duplicate insertion
+            if (flight.Plane != null)
+            {
+                var existingPlane = context.Planes.Local.FirstOrDefault(p => p.PlaneType == flight.Plane.PlaneType && p.Capacity == flight.Plane.Capacity);
+                if (existingPlane != null)
+                {
+                    flight.Plane = existingPlane;
+                    flight.PlaneId = existingPlane.Id;
+                }
+            }
+
+            // Attach passengers to avoid duplicate insertion
+            var attachedPassengers = new List<Passenger>();
+            foreach (var passenger in flight.Passengers.ToList())
+            {
+                var existingPassenger = context.Passengers.Local.FirstOrDefault(p => 
+                    p.FirstName == passenger.FirstName && 
+                    p.LastName == passenger.LastName && 
+                    p.EmailAddress == passenger.EmailAddress);
+                
+                if (existingPassenger != null)
+                {
+                    attachedPassengers.Add(existingPassenger);
+                }
+            }
+            
+            flight.Passengers.Clear();
+            foreach (var passenger in attachedPassengers)
+            {
+                flight.Passengers.Add(passenger);
+            }
+        }
+
+        context.Flights.AddRange(TestData.listFlights);
+        context.SaveChanges();
     }
 }
-
