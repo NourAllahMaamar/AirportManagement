@@ -1,12 +1,20 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace AM.ApplicationCore.Domain;
 
 public class Plane
 {
-    public int Id { get; set; }
+    public int PlaneId { get; set; }
     public PlaneType PlaneType { get; set; }
+    
+    // Capacity must be a positive integer
+    [Range(1, int.MaxValue, ErrorMessage = "Capacity must be a positive integer")]
     public int Capacity { get; set; }
+    
     public DateTime ManufactureDate { get; set; }
-    public ICollection<Flight> Flights { get; set; }
+    
+    // Virtual for lazy loading
+    public virtual ICollection<Flight> Flights { get; set; }
 
     public Plane()
     {

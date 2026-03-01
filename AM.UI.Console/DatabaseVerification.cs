@@ -9,9 +9,9 @@ class DatabaseVerification
 {
     public static void VerifyDatabase()
     {
-        var connectionString = "Server=127.0.0.1;Port=3306;Database=DotNetTd;Uid=root;Pwd=;";
+        var connectionString = "Data Source=AirportManagement.db";
         var optionsBuilder = new DbContextOptionsBuilder<AMContext>();
-        optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        optionsBuilder.UseLazyLoadingProxies().UseSqlite(connectionString);
 
         using (var context = new AMContext(optionsBuilder.Options))
         {

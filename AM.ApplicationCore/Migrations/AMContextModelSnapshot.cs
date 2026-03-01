@@ -3,7 +3,6 @@ using System;
 using AM.ApplicationCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -18,35 +17,36 @@ namespace AM.ApplicationCore.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.1")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true);
 
             modelBuilder.Entity("AM.ApplicationCore.Domain.Flight", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("FlightId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("AirlineLogo")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Destination")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EffectiveArrival")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("date");
 
                     b.Property<int>("EstimatedDuration")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("FlightDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("date");
 
                     b.Property<int>("PlaneId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("FlightId");
 
                     b.HasIndex("PlaneId");
 
@@ -55,70 +55,96 @@ namespace AM.ApplicationCore.Migrations
 
             modelBuilder.Entity("AM.ApplicationCore.Domain.Passenger", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("PassportNumber")
+                        .HasMaxLength(7)
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("date");
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(25)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.Property<string>("TelNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("Passengers");
+                    b.HasKey("PassportNumber");
+
+                    b.ToTable("Passengers", (string)null);
 
                     b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("AM.ApplicationCore.Domain.Plane", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PlaneId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Capacity")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("PlaneCapacity");
 
                     b.Property<DateTime>("ManufactureDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("date");
 
-                    b.Property<string>("PlaneType")
+                    b.Property<int>("PlaneType")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PlaneId");
+
+                    b.ToTable("MyPlanes", (string)null);
+                });
+
+            modelBuilder.Entity("AM.ApplicationCore.Domain.Ticket", b =>
+                {
+                    b.Property<int>("TicketId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FlightId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PassengerId")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("Planes");
+                    b.HasKey("TicketId");
+
+                    b.HasIndex("FlightId");
+
+                    b.HasIndex("PassengerId");
+
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("FlightPassenger", b =>
                 {
-                    b.Property<int>("FlightsId")
-                        .HasColumnType("int");
+                    b.Property<int>("FlightsFlightId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("PassengersId")
-                        .HasColumnType("int");
+                    b.Property<string>("PassengersPassportNumber")
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("FlightsId", "PassengersId");
+                    b.HasKey("FlightsFlightId", "PassengersPassportNumber");
 
-                    b.HasIndex("PassengersId");
+                    b.HasIndex("PassengersPassportNumber");
 
-                    b.ToTable("FlightPassenger");
+                    b.ToTable("FlightPassenger", (string)null);
                 });
 
             modelBuilder.Entity("AM.ApplicationCore.Domain.Staff", b =>
@@ -126,10 +152,10 @@ namespace AM.ApplicationCore.Migrations
                     b.HasBaseType("AM.ApplicationCore.Domain.Passenger");
 
                     b.Property<DateTime>("EmployementDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("date");
 
-                    b.Property<double>("Salary")
-                        .HasColumnType("double");
+                    b.Property<decimal>("Salary")
+                        .HasColumnType("TEXT");
 
                     b.ToTable("Staffs", (string)null);
                 });
@@ -140,11 +166,11 @@ namespace AM.ApplicationCore.Migrations
 
                     b.Property<string>("HealthInformation")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Nationality")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.ToTable("Travellers", (string)null);
                 });
@@ -160,17 +186,36 @@ namespace AM.ApplicationCore.Migrations
                     b.Navigation("Plane");
                 });
 
+            modelBuilder.Entity("AM.ApplicationCore.Domain.Ticket", b =>
+                {
+                    b.HasOne("AM.ApplicationCore.Domain.Flight", "Flight")
+                        .WithMany("Tickets")
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AM.ApplicationCore.Domain.Passenger", "Passenger")
+                        .WithMany("Tickets")
+                        .HasForeignKey("PassengerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Flight");
+
+                    b.Navigation("Passenger");
+                });
+
             modelBuilder.Entity("FlightPassenger", b =>
                 {
                     b.HasOne("AM.ApplicationCore.Domain.Flight", null)
                         .WithMany()
-                        .HasForeignKey("FlightsId")
+                        .HasForeignKey("FlightsFlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AM.ApplicationCore.Domain.Passenger", null)
                         .WithMany()
-                        .HasForeignKey("PassengersId")
+                        .HasForeignKey("PassengersPassportNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -179,7 +224,7 @@ namespace AM.ApplicationCore.Migrations
                 {
                     b.HasOne("AM.ApplicationCore.Domain.Passenger", null)
                         .WithOne()
-                        .HasForeignKey("AM.ApplicationCore.Domain.Staff", "Id")
+                        .HasForeignKey("AM.ApplicationCore.Domain.Staff", "PassportNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -188,9 +233,19 @@ namespace AM.ApplicationCore.Migrations
                 {
                     b.HasOne("AM.ApplicationCore.Domain.Passenger", null)
                         .WithOne()
-                        .HasForeignKey("AM.ApplicationCore.Domain.Traveller", "Id")
+                        .HasForeignKey("AM.ApplicationCore.Domain.Traveller", "PassportNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AM.ApplicationCore.Domain.Flight", b =>
+                {
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("AM.ApplicationCore.Domain.Passenger", b =>
+                {
+                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("AM.ApplicationCore.Domain.Plane", b =>
