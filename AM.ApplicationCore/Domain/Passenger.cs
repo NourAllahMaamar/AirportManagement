@@ -27,11 +27,13 @@ public class Passenger
 
     public virtual ICollection<Flight> Flights { get; set; }
     public virtual ICollection<Ticket> Tickets { get; set; }
+    public virtual ICollection<ReservationTicket> ReservationTickets { get; set; }
 
     public Passenger()
     {
         Flights = new List<Flight>();
         Tickets = new List<Ticket>();
+        ReservationTickets = new List<ReservationTicket>();
     }
 
     

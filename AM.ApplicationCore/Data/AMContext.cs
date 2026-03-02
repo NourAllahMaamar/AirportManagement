@@ -12,6 +12,7 @@ public class AMContext : DbContext
     public DbSet<Staff> Staffs { get; set; }
     public DbSet<Traveller> Travellers { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
+    public DbSet<ReservationTicket> ReservationTickets { get; set; }
 
     public AMContext(DbContextOptions<AMContext> options) : base(options)
     {

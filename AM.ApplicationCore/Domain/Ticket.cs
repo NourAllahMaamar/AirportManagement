@@ -18,4 +18,10 @@ public class Ticket
     
     public required virtual Passenger Passenger { get; set; }
     public required virtual Flight Flight { get; set; }
+    public virtual ICollection<ReservationTicket> ReservationTickets { get; set; }
+
+    public Ticket()
+    {
+        ReservationTickets = new List<ReservationTicket>();
+    }
 }
