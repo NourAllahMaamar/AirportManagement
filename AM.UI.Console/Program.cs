@@ -66,7 +66,7 @@ class Program
 
 
         // PART 2: lazy loading
-        System.Console.WriteLine("\n--- DEMONSTRATING LAZY LOADING ---");
+        System.Console.WriteLine("\nLAZY LOADING");
         
         using (var context = new AMContext(optionsBuilder.Options))
         {
@@ -80,13 +80,10 @@ class Program
                 System.Console.WriteLine($"  Destination: {flight.Destination}");
                 System.Console.WriteLine($"  Flight Date: {flight.FlightDate:yyyy-MM-dd}");
                 
-                System.Console.WriteLine("\n⚡ LAZY LOADING IN ACTION:");
-                System.Console.WriteLine("   Accessing flight.Plane property...");
                 
                
                 if (flight.Plane != null)
                 {
-                    System.Console.WriteLine($"   ✓ Plane loaded automatically via Lazy Loading!");
                     System.Console.WriteLine($"   Plane Type: {flight.Plane.PlaneType}");
                     System.Console.WriteLine($"   Capacity: {flight.Plane.Capacity}");
                     System.Console.WriteLine($"   Manufacture Date: {flight.Plane.ManufactureDate:yyyy-MM-dd}");
@@ -99,9 +96,7 @@ class Program
             else
             {
                 System.Console.WriteLine("\nNo flights found in database.");
-                System.Console.WriteLine("Please uncomment the INSERT TEST DATA section above,");
-                System.Console.WriteLine("run the program once to add data, then comment it again");
-                System.Console.WriteLine("and run again to see Lazy Loading in action.");
+                
             }
         }
 
