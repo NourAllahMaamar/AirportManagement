@@ -7,13 +7,11 @@ public class Plane
     public int PlaneId { get; set; }
     public PlaneType PlaneType { get; set; }
     
-    // Capacity must be a positive integer
     [Range(1, int.MaxValue, ErrorMessage = "Capacity must be a positive integer")]
     public int Capacity { get; set; }
     
     public DateTime ManufactureDate { get; set; }
     
-    // Virtual for lazy loading
     public virtual ICollection<Flight> Flights { get; set; }
 
     public Plane()

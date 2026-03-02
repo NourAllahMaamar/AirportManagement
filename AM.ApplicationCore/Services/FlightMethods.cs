@@ -186,10 +186,9 @@ public class FlightMethods : IFlightMethods
     public List<Traveller> SeniorTravellersMethods(Flight flight)
     {
         return flight.Passengers
-            .Where(p => p is Traveller)
+            .OfType<Traveller>()
             .OrderBy(p => p.BirthDate)
             .Take(3)
-            .Select(p => p as Traveller)
             .ToList();
     }
 

@@ -7,19 +7,16 @@ public class Flight
 {
     public int FlightId { get; set; }
     public DateTime FlightDate { get; set; }
-    public string Destination { get; set; }
+    public required string Destination { get; set; }
     public DateTime EffectiveArrival { get; set; }
     public int EstimatedDuration { get; set; }
     
-    // Renamed property to demonstrate migration modification
     public string? AirlineLogo { get; set; }
     
-    // Foreign Key for Plane
     [ForeignKey("Plane")]
     public int PlaneId { get; set; }
     
-    // Navigation properties - virtual for lazy loading
-    public virtual Plane Plane { get; set; }
+    public required virtual Plane Plane { get; set; }
     public virtual ICollection<Passenger> Passengers { get; set; }
     public virtual ICollection<Ticket> Tickets { get; set; }
 

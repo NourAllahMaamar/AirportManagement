@@ -10,14 +10,12 @@ public class Ticket
     
     public decimal Price { get; set; }
     
-    // Foreign Keys
     [ForeignKey("Passenger")]
-    public string PassengerId { get; set; }
+    public required string PassengerId { get; set; }
     
     [ForeignKey("Flight")]
     public int FlightId { get; set; }
     
-    // Navigation properties - virtual for lazy loading
-    public virtual Passenger Passenger { get; set; }
-    public virtual Flight Flight { get; set; }
+    public required virtual Passenger Passenger { get; set; }
+    public required virtual Flight Flight { get; set; }
 }

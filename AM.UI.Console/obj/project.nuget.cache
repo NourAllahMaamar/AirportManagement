@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "RqNCpDlhYyc=",
+  "dgSpecHash": "rkFqTcpaecQ=",
   "success": true,
   "projectFilePath": "/Users/nourallah/Desktop/AirportManagement/AM.UI.Console/AM.UI.Console.csproj",
   "expectedPackageFiles": [
@@ -35,6 +35,8 @@
     "/Users/nourallah/.nuget/packages/microsoft.extensions.options/9.0.1/microsoft.extensions.options.9.0.1.nupkg.sha512",
     "/Users/nourallah/.nuget/packages/microsoft.extensions.primitives/9.0.1/microsoft.extensions.primitives.9.0.1.nupkg.sha512",
     "/Users/nourallah/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
+    "/Users/nourallah/.nuget/packages/mysqlconnector/2.4.0/mysqlconnector.2.4.0.nupkg.sha512",
+    "/Users/nourallah/.nuget/packages/pomelo.entityframeworkcore.mysql/9.0.0/pomelo.entityframeworkcore.mysql.9.0.0.nupkg.sha512",
     "/Users/nourallah/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.1.10/sqlitepclraw.bundle_e_sqlite3.2.1.10.nupkg.sha512",
     "/Users/nourallah/.nuget/packages/sqlitepclraw.core/2.1.10/sqlitepclraw.core.2.1.10.nupkg.sha512",
     "/Users/nourallah/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.10/sqlitepclraw.lib.e_sqlite3.2.1.10.nupkg.sha512",

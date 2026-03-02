@@ -14,7 +14,7 @@ class Program
         System.Console.WriteLine("Airport Management System - EF Core TP");
         System.Console.WriteLine("=".PadRight(60, '='));
 
-        // Load DB connection string from appsettings.json
+        // Load DB connection
         string? connectionString = null;
         try
         {
@@ -32,15 +32,16 @@ class Program
         }
         System.Console.WriteLine($"\nDB Connection: {connectionString}\n");
 
-        // Configure DbContext with options - Lazy Loading enabled
+        // Configure DbContext with Lazy Loading enabled
         var optionsBuilder = new DbContextOptionsBuilder<AMContext>();
         optionsBuilder
-            .UseLazyLoadingProxies()  // Enable Lazy Loading
-            .UseSqlite(connectionString);
+            .UseLazyLoadingProxies() 
+            .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
+
 
         // === PART 1: INSERT TEST DATA ===
         // This section inserts sample data for all entities
-        
         using (var context = new AMContext(optionsBuilder.Options))
         {
             System.Console.WriteLine("\n--- INSERTING TEST DATA ---");
@@ -174,28 +175,36 @@ class Program
                 {
                     Price = 450.50m,
                     PassengerId = traveller1.PassportNumber,
-                    FlightId = flight1.FlightId
+                    FlightId = flight1.FlightId,
+                    Passenger = traveller1,
+                    Flight = flight1
                 };
                 
                 var ticket2 = new Ticket
                 {
                     Price = 475.00m,
                     PassengerId = traveller2.PassportNumber,
-                    FlightId = flight1.FlightId
+                    FlightId = flight1.FlightId,
+                    Passenger = traveller2,
+                    Flight = flight1
                 };
                 
                 var ticket3 = new Ticket
                 {
                     Price = 320.00m,
                     PassengerId = traveller3.PassportNumber,
-                    FlightId = flight2.FlightId
+                    FlightId = flight2.FlightId,
+                    Passenger = traveller3,
+                    Flight = flight2
                 };
                 
                 var ticket4 = new Ticket
                 {
                     Price = 0.00m,  // Staff ticket (free)
                     PassengerId = captain.PassportNumber,
-                    FlightId = flight1.FlightId
+                    FlightId = flight1.FlightId,
+                    Passenger = captain,
+                    Flight = flight1
                 };
                 
                 context.Tickets.AddRange(ticket1, ticket2, ticket3, ticket4);
@@ -210,6 +219,8 @@ class Program
             }
         }
 
+
+
         // === PART 2: DEMONSTRATE LAZY LOADING ===
         System.Console.WriteLine("\n--- DEMONSTRATING LAZY LOADING ---");
         
@@ -218,7 +229,7 @@ class Program
             // Ensure database is created
             context.Database.EnsureCreated();
             
-            // Retrieve a flight WITHOUT explicitly loading the Plane
+            // Retrieve a flight without explicitly loading the Plane
             var flight = context.Flights.FirstOrDefault();
             
             if (flight != null)
@@ -230,8 +241,7 @@ class Program
                 System.Console.WriteLine("\n⚡ LAZY LOADING IN ACTION:");
                 System.Console.WriteLine("   Accessing flight.Plane property...");
                 
-                // This line triggers lazy loading - EF Core will automatically
-                // fetch the Plane from the database when we access it
+               
                 if (flight.Plane != null)
                 {
                     System.Console.WriteLine($"   ✓ Plane loaded automatically via Lazy Loading!");

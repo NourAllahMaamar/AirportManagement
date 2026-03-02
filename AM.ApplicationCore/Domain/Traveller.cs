@@ -2,8 +2,8 @@ namespace AM.ApplicationCore.Domain;
 
 public class Traveller : Passenger
 {
-    public string HealthInformation { get; set; }
-    public string Nationality { get; set; }
+    public required string HealthInformation { get; set; }
+    public required string Nationality { get; set; }
 
     public override void PassengerType()
     {

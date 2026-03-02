@@ -4,7 +4,6 @@ public class Staff : Passenger
 {
     public DateTime EmployementDate { get; set; }
     
-    // Salary as decimal (SQLite compatible)
     public decimal Salary { get; set; }
 
     public override void PassengerType()

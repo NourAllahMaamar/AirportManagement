@@ -7,80 +7,96 @@ public static class TestData
 
     public static Staff Captain = new Staff
     {
+        PassportNumber = "CAP1234",
         FirstName = "Captain",
         LastName = "Smith",
         EmailAddress = "captain@airline.com",
         BirthDate = new DateTime(1965, 1, 1),
+        TelNumber = "11111111",
         EmployementDate = new DateTime(1999, 1, 1),
         Salary = 99999
     };
 
     public static Staff Hostess1 = new Staff
     {
+        PassportNumber = "HOS1111",
         FirstName = "Hostess",
         LastName = "One",
         EmailAddress = "hostess1@airline.com",
         BirthDate = new DateTime(1995, 1, 1),
+        TelNumber = "22222222",
         EmployementDate = new DateTime(2020, 1, 1),
         Salary = 999
     };
 
     public static Staff Hostess2 = new Staff
     {
+        PassportNumber = "HOS2222",
         FirstName = "Hostess",
         LastName = "Two",
         EmailAddress = "hostess2@airline.com",
         BirthDate = new DateTime(1996, 1, 1),
+        TelNumber = "33333333",
         EmployementDate = new DateTime(2020, 1, 1),
         Salary = 999
     };
 
     public static Traveller Traveller1 = new Traveller
     {
+        PassportNumber = "TRV0001",
         FirstName = "John",
         LastName = "Doe",
         EmailAddress = "john.doe@email.com",
         BirthDate = new DateTime(1980, 1, 1),
+        TelNumber = "44444444",
         Nationality = "American",
         HealthInformation = "Good"
     };
 
     public static Traveller Traveller2 = new Traveller
     {
+        PassportNumber = "TRV0002",
         FirstName = "Pierre",
         LastName = "Dupont",
         EmailAddress = "pierre.dupont@email.com",
         BirthDate = new DateTime(1981, 1, 1),
+        TelNumber = "55555555",
         Nationality = "French",
         HealthInformation = "Good"
     };
 
     public static Traveller Traveller3 = new Traveller
     {
+        PassportNumber = "TRV0003",
         FirstName = "Ahmed",
         LastName = "Ben Ali",
         EmailAddress = "ahmed.benali@email.com",
         BirthDate = new DateTime(1982, 1, 1),
+        TelNumber = "66666666",
         Nationality = "Tunisian",
         HealthInformation = "Good"
     };
 
     public static Traveller Traveller4 = new Traveller
     {
+        PassportNumber = "TRV0004",
         FirstName = "Mary",
         LastName = "Johnson",
         EmailAddress = "mary.johnson@email.com",
         BirthDate = new DateTime(1983, 1, 1),
+        TelNumber = "77777777",
         Nationality = "American",
         HealthInformation = "Good"
     };
 
     public static Traveller Traveller5 = new Traveller
     {
+        PassportNumber = "TRV0005",
         FirstName = "Carlos",
         LastName = "Garcia",
         EmailAddress = "carlos.garcia@email.com",
         BirthDate = new DateTime(1984, 1, 1),
+        TelNumber = "88888888",
         Nationality = "Spanish",
         HealthInformation = "Good"
     };
